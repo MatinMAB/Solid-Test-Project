@@ -4,10 +4,10 @@ import React, { useState } from "react";
 import axios from "axios";
 
 //Import Link Router
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 //Import Styles
-import styles from "./RegisterForm.module.css";
+import styles from "./LoginForm.module.css";
 
 //Material UI
 import Box from "@mui/material/Box";
@@ -22,33 +22,19 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
-//Register Functional Component
-const Register = () => {
+//Login Functional Component
+const LoginForm = () => {
   const navigate = useNavigate();
 
   //States
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({
-    firstname: "",
-    lastname: "",
     phone: "",
     password: "",
   });
 
   //Functions
-  const firstnameHandler = (event) => {
-    setUser((prevUser) => ({
-      ...prevUser,
-      firstname: event.target.value,
-    }));
-  };
-  const lastnameHandler = (event) => {
-    setUser((prevUser) => ({
-      ...prevUser,
-      lastname: event.target.value,
-    }));
-  };
   const phoneHandler = (event) => {
     setUser((prevUser) => ({
       ...prevUser,
@@ -61,19 +47,22 @@ const Register = () => {
       password: event.target.value,
     }));
   };
+
   const showPasswordHandler = () => {
     setShowPassword(!showPassword);
   };
 
-  const signUp = () => {
+  const login = () => {
     setLoading(true);
     axios
       .post(
-        `http://chl-api.rahkardigital.com/API/V1/User/register?password=${user.password}&firstname=${user.firstname}&lastname=${user.lastname}&phone=${user.phone}`
+        `http://chl-api.rahkardigital.com/API/V1/User/login?phone=${user.phone}&password=${user.password}`
       )
       .then((response) => {
         console.log(response.data);
-        if (response.data.ok) {
+        if (response.data.ok && response.data.active) {
+          navigate("/profile");
+        } else if (response.data.ok && !response.data.active) {
           navigate("/activate");
         }
       })
@@ -84,42 +73,23 @@ const Register = () => {
         setLoading(false);
       });
   };
-
   return (
     <>
-      <div className={styles.registerPage}>
+      <div className={styles.loginPage}>
         <Box
           component="form"
           noValidate
           autoComplete="off"
-          className={styles.registerFormBox}
+          className={styles.loginFormBox}
         >
           <Typography
             variant="h5"
             component="h5"
             sx={{ margin: "20px 0 35px", textAlign: "center" }}
           >
-            فرم ثبت نام
+            فرم ورود
           </Typography>
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                id="outlined-error-helper-text"
-                label="نام *"
-                value={user.firstname}
-                onChange={firstnameHandler}
-                sx={{ width: "100%" }}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                id="outlined-error-helper-text"
-                label="نام خانوادگی *"
-                value={user.lastname}
-                onChange={lastnameHandler}
-                sx={{ width: "100%" }}
-              />
-            </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
                 id="outlined-error-helper-text"
@@ -154,13 +124,13 @@ const Register = () => {
             </Grid>
             <Grid item xs={12}>
               <Button
-                onClick={signUp}
                 disabled={loading}
+                onClick={login}
                 variant="contained"
                 color="primary"
                 sx={{ width: "100%" }}
               >
-                {loading ? <span>صبر کنید ...</span> : <span>ثبت نام</span>}
+                {loading ? <span>صبر کنید ...</span> : <span>ورود</span>}
               </Button>
             </Grid>
           </Grid>
@@ -169,9 +139,9 @@ const Register = () => {
             component="p"
             sx={{ margin: "35px 0 0", textAlign: "center" }}
           >
-            از قبل حساب کاربری داشته‌اید ؟{" "}
-            <Link to="/login" className={styles.loginLink} color="primary">
-              ورود
+            از قبل حساب کاربری نداشته‌اید ؟{" "}
+            <Link to="/register" className={styles.signupLink} color="primary">
+              ثبت نام
             </Link>
           </Typography>
         </Box>
@@ -179,5 +149,4 @@ const Register = () => {
     </>
   );
 };
-
-export default Register;
+export default LoginForm;

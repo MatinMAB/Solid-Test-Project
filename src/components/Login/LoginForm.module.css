@@ -1,0 +1,20 @@
+.loginPage{
+  background-image: linear-gradient(to top, #f9f9f9, #1976d2cd);
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loginFormBox{
+  background-color: #f3f3f3; 
+  box-shadow: 2px 2px 25px rgba(0, 0, 0, 0.4);
+  border-radius: 6px;
+  padding: 25px;
+  width: 700px;
+  margin: 20px;
+}
+.signupLink {
+  color: #1976d2;
+  text-decoration: none;
+}
