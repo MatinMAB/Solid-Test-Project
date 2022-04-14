@@ -30,10 +30,10 @@ const ActivateForm = () => {
 
   //SideEffects
   useEffect(() => {
-    if (state.ok) {
+    if (state.active) {
       navigate("/profile");
     }
-  }, [state.ok]);
+  }, [state.active]);
 
   //Functions
   const confirmCodeHandler = (event) => {
@@ -45,7 +45,7 @@ const ActivateForm = () => {
       activateUser({ phone: state.phone, token: state.token, confirmCode })
     );
 
-    if (confirmCode != state.confirmCode || !state.ok) {
+    if (confirmCode != state.confirmCode) {
       setCodeError(true);
     } else {
       setCodeError(false);
@@ -95,10 +95,8 @@ const ActivateForm = () => {
             component="p"
             sx={{ margin: "10px 0 0", textAlign: "center", color: "red" }}
           >
-            {state.error ? (
-              <span>ارتباط دچار مشکل است! لطفا مجدد امتحان کنید</span>
-            ) : codeError ? (
-              <span>کد تاییدیه به درستی وارد نشده است یا منقضی شده است.</span>
+            {state.error || codeError ? (
+              <span>کد تاییدیه به درستی وارد نشده است یا توکن منقضی شده است.</span>
             ) : (
               <p></p>
             )}

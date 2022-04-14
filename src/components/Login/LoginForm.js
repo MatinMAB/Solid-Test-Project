@@ -1,4 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+
+//Import React-Redux
+import { useSelector, useDispatch } from "react-redux";
+import { loginUser } from "../../redux/user/userActions";
 
 //Import Axios
 import axios from "axios";
@@ -24,7 +28,12 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 //Login Functional Component
 const LoginForm = () => {
+  //Router hook
   const navigate = useNavigate();
+
+  //redux hooks
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
 
   //States
   const [showPassword, setShowPassword] = useState(false);
@@ -33,6 +42,19 @@ const LoginForm = () => {
     phone: "",
     password: "",
   });
+
+  //SideEffects
+  useEffect(() => {
+    if (!state.active && !!state.token) {
+      navigate("/activate");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!!state.token) {
+      navigate("/profile");
+    }
+  }, [state.token]);
 
   //Functions
   const phoneHandler = (event) => {
@@ -53,25 +75,7 @@ const LoginForm = () => {
   };
 
   const login = () => {
-    setLoading(true);
-    axios
-      .post(
-        `http://chl-api.rahkardigital.com/API/V1/User/login?phone=${user.phone}&password=${user.password}`
-      )
-      .then((response) => {
-        console.log(response.data);
-        if (response.data.ok && response.data.active) {
-          navigate("/profile");
-        } else if (response.data.ok && !response.data.active) {
-          navigate("/activate");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    dispatch(loginUser(user));
   };
   return (
     <>
@@ -132,12 +136,23 @@ const LoginForm = () => {
               >
                 {loading ? <span>صبر کنید ...</span> : <span>ورود</span>}
               </Button>
+              <Typography
+                variant="p"
+                component="p"
+                sx={{ margin: "5px 0 0", textAlign: "center", color: "red" }}
+              >
+                {state.error ? (
+                  <span>اطلاعات وارد شده صحیح نمی‌باشد</span>
+                ) : (
+                  <p></p>
+                )}
+              </Typography>
             </Grid>
           </Grid>
           <Typography
             variant="p"
             component="p"
-            sx={{ margin: "35px 0 0", textAlign: "center" }}
+            sx={{ margin: "20px 0 0", textAlign: "center" }}
           >
             از قبل حساب کاربری نداشته‌اید ؟{" "}
             <Link to="/register" className={styles.signupLink} color="primary">

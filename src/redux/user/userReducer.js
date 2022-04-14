@@ -9,7 +9,7 @@ const initialState = {
   confirmCode: "123456",
   loading: false,
   error: "",
-  alreadyExist : false,
+  alreadyExist: false,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -20,12 +20,6 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         ok: false,
-        active: false,
-        token: "",
-        phone: "",
-        password: "",
-        firstname: "",
-        lastname: "",
         loading: false,
         error: action.payload,
       };
@@ -37,18 +31,43 @@ const userReducer = (state = initialState, action) => {
         phone: action.phone,
         password: action.password,
         firstname: action.firstname,
-        lastname: action.lastname,   
+        lastname: action.lastname,
         active: action.payload.active,
         token: action.payload.token,
-        alreadyExist : action.payload.alreadyExist
+        alreadyExist: action.payload.alreadyExist,
       };
     case "ACTIVATE_SUCCESS":
-      return {
-        ...state,
-        ok : action.payload.ok,
-        loading: false,
-        error: "",
-      };
+      if (action.payload.ok) {
+        return {
+          ...state,
+          active: true,
+          loading: false,
+          error: "",
+        };
+      } else {
+        return {
+          ...state,
+          loading: false,
+          error: "error Expected",
+        };
+      }
+    case "LOGIN_SUCCESS":
+      if (action.payload.ok) {
+        return {
+          ...state,
+          active: action.payload.active,
+          token: action.payload.token,
+          loading : false,
+          error:""
+        };
+      } else {
+        return {
+          ...state,
+          loading : false,
+          error : "error Expected"
+        };
+      }
+
     default:
       return state;
   }

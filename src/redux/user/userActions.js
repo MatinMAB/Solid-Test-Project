@@ -26,6 +26,10 @@ const activateSuccess = (data) => {
   return { type: "ACTIVATE_SUCCESS", payload: data };
 };
 
+const loginSuccess = (data) => {
+  return { type: "LOGIN_SUCCESS", payload: data };
+};
+
 export const registerUser = (user) => {
   return (dispatch) => {
     dispatch(fetchRequest());
@@ -53,18 +57,34 @@ export const registerUser = (user) => {
 
 export const activateUser = (user) => {
   return (dispatch) => {
-      dispatch(fetchRequest());
-      axios
-        .get(
-          `http://chl-api.rahkardigital.com/API/V1/User/active?phone=${user.phone}&code=${user.confirmCode}&token=${user.token}`
-        )
-        .then((response) => {
-          console.log(response.data);
-          dispatch(activateSuccess(response.data));
-        })
-        .catch((error) => {
-          dispatch(fetchFailure(error.message));
-        });
-    
+    dispatch(fetchRequest());
+    axios
+      .get(
+        `http://chl-api.rahkardigital.com/API/V1/User/active?phone=${user.phone}&code=${user.confirmCode}&token=${user.token}`
+      )
+      .then((response) => {
+        console.log(response.data);
+        dispatch(activateSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(fetchFailure(error.message));
+      });
+  };
+};
+
+export const loginUser = (user) => {
+  return (dispatch) => {
+    dispatch(fetchRequest());
+    axios
+      .get(
+        `http://chl-api.rahkardigital.com/API/V1/User/login?phone=${user.phone}&password=${user.password}`
+      )
+      .then((response) => {
+        console.log(response.data);
+        dispatch(loginSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(fetchFailure(error.message));
+      });
   };
 };
