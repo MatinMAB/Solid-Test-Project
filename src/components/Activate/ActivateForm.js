@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-//Import Axios
-import axios from "axios";
+//Import React-Redux
+import { useSelector, useDispatch } from "react-redux";
+import { activateUser } from "../../redux/user/userActions";
 
 //Import Link Router
 import { useNavigate } from "react-router-dom";
@@ -16,11 +17,23 @@ import { Typography, Grid, Button } from "@mui/material";
 
 //Activate Functional Component
 const ActivateForm = () => {
+  //Router hook
   const navigate = useNavigate();
+
+  //redux hooks
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
 
   //States
   const [confirmCode, setConfirmCode] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [codeError, setCodeError] = useState(false);
+
+  //SideEffects
+  useEffect(() => {
+    if (state.ok) {
+      navigate("/profile");
+    }
+  }, [state.ok]);
 
   //Functions
   const confirmCodeHandler = (event) => {
@@ -28,23 +41,15 @@ const ActivateForm = () => {
   };
 
   const confirm = () => {
-    setLoading(true);
-    axios
-      .post(
-        `http://chl-api.rahkardigital.com/API/V1/User/active?phone=09123456789&code=${confirmCode}&token=f726564d5071828215b9ff8a1e66ddb0d53027f9593ef0873e8d062681d1f931`
-      )
-      .then((response) => {
-        console.log(response.data);
-        if (response.data.ok) {
-          navigate("/profile");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    dispatch(
+      activateUser({ phone: state.phone, token: state.token, confirmCode })
+    );
+
+    if (confirmCode != state.confirmCode || !state.ok) {
+      setCodeError(true);
+    } else {
+      setCodeError(false);
+    }
   };
 
   return (
@@ -75,16 +80,29 @@ const ActivateForm = () => {
             </Grid>
             <Grid item xs={12}>
               <Button
-                disabled={loading}
+                disabled={state.loading}
                 onClick={confirm}
                 variant="contained"
                 color="primary"
                 sx={{ width: "100%" }}
               >
-                {loading ? <span>صبر کنید ...</span> : <span>تایید</span>}
+                {state.loading ? <span>صبر کنید ...</span> : <span>تایید</span>}
               </Button>
             </Grid>
           </Grid>
+          <Typography
+            variant="subtitle2"
+            component="p"
+            sx={{ margin: "10px 0 0", textAlign: "center", color: "red" }}
+          >
+            {state.error ? (
+              <span>ارتباط دچار مشکل است! لطفا مجدد امتحان کنید</span>
+            ) : codeError ? (
+              <span>کد تاییدیه به درستی وارد نشده است یا منقضی شده است.</span>
+            ) : (
+              <p></p>
+            )}
+          </Typography>
         </Box>
       </div>
     </>

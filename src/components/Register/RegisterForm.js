@@ -43,10 +43,10 @@ const Register = () => {
 
   //SideEffects
   useEffect(() => {
-    if (state.ok) {
+    if (!!state.token) {
       navigate("/activate");
     }
-  }, [state.ok]);
+  }, [state.token]);
 
   //Functions
   const firstnameHandler = (event) => {
@@ -166,6 +166,7 @@ const Register = () => {
             sx={{ margin: "10px 0 0", textAlign: "center" ,color : 'red' }}
           >
             {state.error ? <span>ارتباط دچار مشکل است! لطفا مجدد امتحان کنید</span> : <p></p>}
+            {state.alreadyExist ? <span>شما از قبل حساب کاربری داشته اید! لطفا ورود کنید</span> : <p></p>}
           </Typography>
           <Typography
             variant="p"
