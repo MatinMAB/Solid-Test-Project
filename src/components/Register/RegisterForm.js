@@ -74,7 +74,7 @@ const Register = () => {
       .then((response) => {
         console.log(response.data);
         if (response.data.ok) {
-          navigate("/");
+          navigate("/activate");
         }
       })
       .catch((error) => {

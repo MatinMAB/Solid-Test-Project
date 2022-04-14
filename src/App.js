@@ -2,16 +2,13 @@ import React from "react";
 import Router from "./router/index";
 
 //Material UI
-import { createTheme, ThemeProvider } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
 
 //RTL Project
 import Rtl from "./rtl";
 
-const theme = createTheme({
-  typography: {
-    fontFamily: ["Sahel"],
-  },
-});
+//theme
+import theme from "./theme"
 
 function App() {
   return (
