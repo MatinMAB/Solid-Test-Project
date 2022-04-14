@@ -1,5 +1,11 @@
 import React from "react";
+
+//React-Router-DOM
 import Router from "./router/index";
+
+//Redux
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 //Material UI
 import { ThemeProvider } from "@mui/material";
@@ -8,16 +14,18 @@ import { ThemeProvider } from "@mui/material";
 import Rtl from "./rtl";
 
 //theme
-import theme from "./theme"
+import theme from "./theme";
 
 function App() {
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <Rtl>
-          <Router />
-        </Rtl>
-      </ThemeProvider>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <Rtl>
+            <Router />
+          </Rtl>
+        </ThemeProvider>
+      </Provider>
     </>
   );
 }

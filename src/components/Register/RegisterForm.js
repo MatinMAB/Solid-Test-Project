@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-//Import Axios
-import axios from "axios";
+//Import React-Redux
+import { useSelector, useDispatch } from "react-redux";
+import { registerUser } from "../../redux/user/userActions";
 
 //Import Link Router
 import { Link, useNavigate } from "react-router-dom";
@@ -24,17 +25,28 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 //Register Functional Component
 const Register = () => {
+  //Router hook
   const navigate = useNavigate();
+
+  //redux hooks
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
 
   //States
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({
     firstname: "",
     lastname: "",
     phone: "",
     password: "",
   });
+
+  //SideEffects
+  useEffect(() => {
+    if (state.ok) {
+      navigate("/activate");
+    }
+  }, [state.ok]);
 
   //Functions
   const firstnameHandler = (event) => {
@@ -66,23 +78,7 @@ const Register = () => {
   };
 
   const signUp = () => {
-    setLoading(true);
-    axios
-      .post(
-        `http://chl-api.rahkardigital.com/API/V1/User/register?password=${user.password}&firstname=${user.firstname}&lastname=${user.lastname}&phone=${user.phone}`
-      )
-      .then((response) => {
-        console.log(response.data);
-        if (response.data.ok) {
-          navigate("/activate");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    dispatch(registerUser(user));
   };
 
   return (
@@ -155,15 +151,22 @@ const Register = () => {
             <Grid item xs={12}>
               <Button
                 onClick={signUp}
-                disabled={loading}
+                disabled={state.loading}
                 variant="contained"
                 color="primary"
                 sx={{ width: "100%" }}
               >
-                {loading ? <span>صبر کنید ...</span> : <span>ثبت نام</span>}
+                {state.loading ? <span>صبر کنید ...</span> : <span>ثبت نام</span>}
               </Button>
             </Grid>
           </Grid>
+          <Typography
+            variant="subtitle2"
+            component="p"
+            sx={{ margin: "10px 0 0", textAlign: "center" ,color : 'red' }}
+          >
+            {state.error ? <span>ارتباط دچار مشکل است! لطفا مجدد امتحان کنید</span> : <p></p>}
+          </Typography>
           <Typography
             variant="p"
             component="p"
