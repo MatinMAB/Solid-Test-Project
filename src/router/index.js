@@ -7,6 +7,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Register from "../views/Register";
 import Activate from "../views/Activate";
 import Login from "../views/Login";
+import Profile from "../views/Profile";
 
 const router = () => {
   return (
@@ -15,6 +16,7 @@ const router = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/activate" element={<Activate />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/profile/*" element={<Profile/>} />
         <Route path="/" element={<Navigate to="/register" />} />
       </Routes>
     </>

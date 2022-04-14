@@ -1,0 +1,49 @@
+.sidebar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.imageBox {
+  border-bottom: 1px solid #1976d2;
+}
+.userImage {
+  border-radius: 50%;
+  width: 70px;
+  margin: 15px 0;
+}
+.lists {
+  align-self: flex-start;
+}
+.itemsList {
+  list-style-type: none;
+  padding: 0px 20px;
+}
+.item {
+  margin: 10px 0;
+}
+.itemLink {
+  text-decoration: none;
+  color: #fff;
+  padding: 5px 20px;
+}
+.itemLink:hover {
+  color: #0c58a4;
+}
+.itemLink.active {
+  color: #0c58a4;
+  background-color: #fff;
+  border-radius: 20px;
+}
+.menuIcon{
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .lists {
+    display: none;
+  }
+  .menuIcon{
+    display: block;
+  }
+}

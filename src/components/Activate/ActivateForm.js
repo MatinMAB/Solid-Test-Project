@@ -31,12 +31,12 @@ const ActivateForm = () => {
     setLoading(true);
     axios
       .post(
-        `http://chl-api.rahkardigital.com/API/V1/User/active?phone=09123456789&code=${confirmCode}&token=d40f5eabd7e5172c639e9c284581e1c544572a382fe04f620a96d9aa6ed12b16`
+        `http://chl-api.rahkardigital.com/API/V1/User/active?phone=09123456789&code=${confirmCode}&token=f726564d5071828215b9ff8a1e66ddb0d53027f9593ef0873e8d062681d1f931`
       )
       .then((response) => {
         console.log(response.data);
         if (response.data.ok) {
-          navigate("/login");
+          navigate("/profile");
         }
       })
       .catch((error) => {
