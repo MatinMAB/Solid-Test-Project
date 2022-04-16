@@ -32,6 +32,7 @@ const Dashboard = () => {
     if (!!state.token === false) {
       navigate("/login");
     }
+    //eslint-disable-next-line
   }, [state.token]);
 
   //V-DOM

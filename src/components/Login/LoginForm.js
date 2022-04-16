@@ -47,7 +47,7 @@ const LoginForm = () => {
   //SideEffects
   useEffect(() => {
     setErrors(validate(user));
-    console.log(errors);
+    //eslint-disable-next-line
   }, [user, touched]);
   useEffect(() => {
     if (state.navigateLink === "/profile") {
@@ -55,6 +55,7 @@ const LoginForm = () => {
     } else if (state.navigateLink === "/activate") {
       navigate("/activate");
     }
+    //eslint-disable-next-line
   }, [state.navigateLink]);
 
   //Functions

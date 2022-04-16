@@ -42,17 +42,19 @@ const UserAccount = () => {
   //SideEffects
   useEffect(() => {
     setErrors(validate(password));
-    console.log(errors);
+    //eslint-disable-next-line
   }, [password, touched]);
 
   useEffect(() => {
     dispatch(getUserInfo(state.token));
+    //eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     if (!!state.token === false) {
       navigate("/login");
     }
+    //eslint-disable-next-line
   }, [state.token]);
 
   //Functions

@@ -53,7 +53,6 @@ export const registerUser = (user, phone) => {
         `http://chl-api.rahkardigital.com/API/V1/User/register?password=${user.password}&firstname=${user.firstname}&lastname=${user.lastname}&phone=${user.phone}`
       )
       .then((response) => {
-        console.log(response.data);
         dispatch(registerSuccess(response.data, phone));
       })
       .catch((error) => {
@@ -71,7 +70,6 @@ export const activateUser = (user) => {
         `http://chl-api.rahkardigital.com/API/V1/User/active?phone=${user.phone}&code=${user.confirmCode}&token=${user.token}`
       )
       .then((response) => {
-        console.log(response.data);
         dispatch(activateSuccess(response.data));
       })
       .catch((error) => {
@@ -89,7 +87,6 @@ export const loginUser = (user) => {
         `http://chl-api.rahkardigital.com/API/V1/User/login?phone=${user.phone}&password=${user.password}`
       )
       .then((response) => {
-        console.log(response.data);
         dispatch(loginSuccess(response.data, user.phone));
       })
       .catch((error) => {
@@ -107,7 +104,6 @@ export const getUserInfo = (token) => {
         `http://chl-api.rahkardigital.com/API/V1/User/getUserInfo?token=${token}`
       )
       .then((response) => {
-        console.log(response.data);
         dispatch(getUserInfoSuccess(response.data));
       })
       .catch((error) => {
@@ -125,7 +121,6 @@ export const changePassword = (password, token) => {
         `http://chl-api.rahkardigital.com/API/V1/User/changePassword?token=${token}&newPassword=${password.new}&curPassword=${password.current}`
       )
       .then((response) => {
-        console.log(response.data);
         dispatch(changePasswordSuccess(response.data));
       })
       .catch((error) => {

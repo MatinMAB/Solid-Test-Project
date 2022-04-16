@@ -31,12 +31,14 @@ const ActivateForm = () => {
     if (!!state.token === false) {
       navigate("/");
     }
+    //eslint-disable-next-line
   }, []);
 
   useEffect(() => {
     if (state.navigateLink === "/profile") {
       navigate("/profile");
     }
+    //eslint-disable-next-line
   }, [state.navigateLink]);
 
   //Functions
