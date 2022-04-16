@@ -110,7 +110,6 @@ const LoginForm = () => {
               <TextField
                 error={!!errors.phone && !!touched.phone}
                 name="phone"
-                id="outlined-error-helper-text"
                 label="شماره همراه *"
                 value={user.phone}
                 onChange={userHandler}
@@ -123,7 +122,6 @@ const LoginForm = () => {
               <TextField
                 error={!!errors.password && !!touched.password}
                 name="password"
-                id="outlined-error-helper-text"
                 type={showPassword ? "text" : "password"}
                 label="رمز عبور *"
                 value={user.password}

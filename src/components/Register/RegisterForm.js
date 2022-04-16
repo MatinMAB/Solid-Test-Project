@@ -112,7 +112,6 @@ const Register = () => {
               <TextField
                 error={!!errors.firstname && !!touched.firstname}
                 name="firstname"
-                id="outlined-error-helper-text"
                 label="نام *"
                 value={user.firstname}
                 onChange={userHandler}
@@ -127,7 +126,6 @@ const Register = () => {
               <TextField
                 error={!!errors.lastname && !!touched.lastname}
                 name="lastname"
-                id="outlined-error-helper-text"
                 label="نام خانوادگی *"
                 value={user.lastname}
                 onChange={userHandler}
@@ -142,7 +140,6 @@ const Register = () => {
               <TextField
                 error={!!errors.phone && !!touched.phone}
                 name="phone"
-                id="outlined-error-helper-text"
                 label="شماره همراه *"
                 value={user.phone}
                 onChange={userHandler}
@@ -155,7 +152,6 @@ const Register = () => {
               <TextField
                 error={!!errors.password && !!touched.password}
                 name="password"
-                id="outlined-error-helper-text"
                 type={showPassword ? "text" : "password"}
                 label="رمز عبور *"
                 value={user.password}

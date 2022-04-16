@@ -105,7 +105,6 @@ const UserAccount = () => {
         <Grid item xs={12} sm={6}>
           <TextField
             value={state.firstname}
-            id="outlined-error-helper-text"
             label="نام"
             sx={{ width: "100%" }}
             disabled
@@ -114,7 +113,6 @@ const UserAccount = () => {
         <Grid item xs={12} sm={6}>
           <TextField
             value={state.lastname}
-            id="outlined-error-helper-text"
             label="نام خانوادگی"
             sx={{ width: "100%" }}
             disabled
@@ -123,7 +121,6 @@ const UserAccount = () => {
         <Grid item xs={12} sm={6}>
           <TextField
             value={state.phone}
-            id="outlined-error-helper-text"
             label="شماره همراه"
             sx={{ width: "100%" }}
             disabled
@@ -142,7 +139,6 @@ const UserAccount = () => {
           <TextField
             name="current"
             error={!!errors.current && !!touched.current}
-            id="outlined-error-helper-text"
             type={showPassword ? "text" : "password"}
             value={password.current}
             label="رمز عبور فعلی"
@@ -169,7 +165,6 @@ const UserAccount = () => {
           <TextField
             name="new"
             error={!!errors.new && !!touched.new}
-            id="outlined-error-helper-text"
             type={showPassword ? "text" : "password"}
             label="رمز جدید"
             value={password.new}
