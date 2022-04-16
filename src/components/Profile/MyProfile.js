@@ -1,5 +1,10 @@
 import React , {useState} from "react";
 
+//Import React-Redux
+import { useSelector, useDispatch } from "react-redux";
+import { exit } from "../../redux/user/userActions";
+
+
 //Import Link Router
 import { Routes, Route, Link, useLocation , useNavigate } from "react-router-dom";
 
@@ -22,6 +27,11 @@ const Profile = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+
+//redux hooks
+const state = useSelector((state) => state);
+const dispatch = useDispatch();
+  
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -30,6 +40,14 @@ const Profile = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const exitDashboard = () => {
+    navigate('/login');
+    dispatch(exit())
+
+  }
+
+
   return (
     <>
       <Grid container spacing={2} sx={{ height: "100vh" }}>
@@ -75,7 +93,7 @@ const Profile = () => {
               >
                 <MenuItem onClick={() => navigate('/profile')}>داشبورد</MenuItem>
                 <MenuItem onClick={() => navigate('/profile/my-account')}>حساب کاربری</MenuItem>
-                <MenuItem onClick={() => navigate('/login')}>خروج</MenuItem>
+                <MenuItem onClick={exitDashboard}>خروج</MenuItem>
               </Menu>
             </div>
             <div className={styles.lists}>
@@ -101,7 +119,7 @@ const Profile = () => {
                     حساب کاربری
                   </Link>
                 </li>
-                <li className={styles.item}>
+                <li className={styles.item} onClick={exitDashboard}>
                   <Link className={styles.itemLink} to="/login">
                     خروج
                   </Link>

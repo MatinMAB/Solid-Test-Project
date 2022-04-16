@@ -4,9 +4,6 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { loginUser } from "../../redux/user/userActions";
 
-//Import Axios
-import axios from "axios";
-
 //Import Link Router
 import { useNavigate, Link } from "react-router-dom";
 

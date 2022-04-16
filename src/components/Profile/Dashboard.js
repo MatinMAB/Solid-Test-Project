@@ -1,4 +1,11 @@
-import React from "react";
+import React , {useEffect} from "react";
+
+
+//Import React-Redux
+import { useSelector, useDispatch } from "react-redux";
+
+//Import Link Router
+import { useNavigate } from "react-router-dom";
 
 //Import Styles
 import styles from "./Dashboard.module.css";
@@ -17,6 +24,16 @@ import MailIcon from "@mui/icons-material/Mail";
 import ArrowCircleLeftSharpIcon from "@mui/icons-material/ArrowCircleLeftSharp";
 
 const Dashboard = () => {
+
+  const state = useSelector((state) => state);
+  
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if(!!state.token === false){
+      navigate('/login')
+    }
+  },[state.token])
 
   return (
     <>

@@ -17,7 +17,6 @@ const registerSuccess = (data, phone) => {
   };
 };
 
-
 const activateSuccess = (data) => {
   return { type: "ACTIVATE_SUCCESS", payload: data };
 };
@@ -27,10 +26,25 @@ const loginSuccess = (data , phone) => {
   return { type: "LOGIN_SUCCESS", payload: data , phone };
 };
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 72e111aaa9c793b68253e7ce5bc2559d2086264e
+const getUserInfoSuccess = (data) => {
+  return { type: "GET_USER_INFO_SUCCESS", payload: data };
+};
+
+const changePasswordSuccess = (data) => {
+  return { type: "CHANGE_PASSSWORD_SUCCESS", payload: data };
+};
+
+export const exit = () => {
+  return { type: "EXIT" };
+};
+
+
+
+
+
+
+
 export const registerUser = (user , phone) => {
   return (dispatch) => {
     dispatch(fetchRequest());
@@ -75,6 +89,41 @@ export const loginUser = (user) => {
       .then((response) => {
         console.log(response.data);
         dispatch(loginSuccess(response.data , user.phone));
+      })
+      .catch((error) => {
+        dispatch(fetchFailure(error.message));
+      });
+  };
+};
+
+
+export const getUserInfo = (token) => {
+  return (dispatch) => {
+    dispatch(fetchRequest());
+    axios
+      .get(
+        `http://chl-api.rahkardigital.com/API/V1/User/getUserInfo?token=${token}`
+      )
+      .then((response) => {
+        console.log(response.data);
+        dispatch(getUserInfoSuccess(response.data));
+      })
+      .catch((error) => {
+        dispatch(fetchFailure(error.message));
+      });
+  };
+};
+
+export const changePassword = (password , token) => {
+  return (dispatch) => {
+    dispatch(fetchRequest());
+    axios
+      .get(
+        `http://chl-api.rahkardigital.com/API/V1/User/changePassword?token=${token}&newPassword=${password.new}&curPassword=${password.current}`
+      )
+      .then((response) => {
+        console.log(response.data);
+        dispatch(changePasswordSuccess(response.data));
       })
       .catch((error) => {
         dispatch(fetchFailure(error.message));

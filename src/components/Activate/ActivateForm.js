@@ -29,17 +29,16 @@ const ActivateForm = () => {
 
   //SideEffects
   useEffect(() => {
-<<<<<<< HEAD
+    if (!!state.token === false) {
+      navigate("/");
+    }
+  }, []);
+
+  useEffect(() => {
     if (state.navigateLink === "/profile") {
       navigate("/profile");
     }
   }, [state.navigateLink]);
-=======
-    if (state.navigate === "/profile") {
-      navigate("/profile");
-    }
-  }, [state.navigate]);
->>>>>>> 72e111aaa9c793b68253e7ce5bc2559d2086264e
 
   //Functions
   const confirmCodeHandler = (event) => {

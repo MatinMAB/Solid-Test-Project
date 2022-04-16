@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 
-//Import Axios
-import axios from "axios";
+//Import React-Redux
+import { useSelector, useDispatch } from "react-redux";
+import { getUserInfo, changePassword } from "../../redux/user/userActions";
+
+//Import Link Router
+import { useNavigate } from "react-router-dom";
 
 //Material UI
 import TextField from "@mui/material/TextField";
@@ -16,36 +20,29 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const UserAccount = () => {
+  //Router hook
+  const navigate = useNavigate();
+
+  //redux hooks
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+
   const [showPassword, setShowPassword] = useState(false);
-  const [userInfo, setUserInfo] = useState({
-    firstname: "ali",
-    lastname: "alies",
-    phone: "09124567893",
-  });
+
   const [password, setPassword] = useState({
     new: "",
     current: "",
   });
 
   useEffect(() => {
-    // setLoading(true);
-    axios
-      .post(
-        `http://chl-api.rahkardigital.com/API/V1/User/getUserInfo?token=79adae459a6291d02a2f7bf118ddef34e0516a3e92e641ad0f99221aa231c757`
-      )
-      .then((response) => {
-        console.log(response.data);
-        if (response.data.ok) {
-          // navigate("/activate");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        // setLoading(false);
-      });
+    dispatch(getUserInfo(state.token));
   }, []);
+
+  useEffect(() => {
+    if (!!state.token === false) {
+      navigate("/login");
+    }
+  }, [state.token]);
 
   const currentPasswordHandler = (event) => {
     setPassword((prevPassword) => ({
@@ -63,24 +60,13 @@ const UserAccount = () => {
     setShowPassword(!showPassword);
   };
   const ConfirmNewPassword = () => {
-    // setLoading(true);
-    axios
-      .post(
-        `http://chl-api.rahkardigital.com/API/V1/User/changePassword?token=79adae459a6291d02a2f7bf118ddef34e0516a3e92e641ad0f99221aa231c757&newPassword=${password.new}&curPassword=${password.current}`
-      )
-      .then((response) => {
-        console.log(response.data);
-        if (response.data.ok) {
-          // navigate("/activate");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      })
-      .finally(() => {
-        // setLoading(false);
-      });
+    dispatch(changePassword(password, state.token));
+    setPassword({
+      new: "",
+      current: "",
+    });
   };
+
 
   return (
     <>
@@ -94,7 +80,7 @@ const UserAccount = () => {
       <Grid container spacing={3} sx={{ padding: "10px 50px" }}>
         <Grid item xs={12} sm={6}>
           <TextField
-            value={userInfo.firstname}
+            value={state.firstname}
             id="outlined-error-helper-text"
             label="نام"
             sx={{ width: "100%" }}
@@ -103,7 +89,7 @@ const UserAccount = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            value={userInfo.lastname}
+            value={state.lastname}
             id="outlined-error-helper-text"
             label="نام خانوادگی"
             sx={{ width: "100%" }}
@@ -112,7 +98,7 @@ const UserAccount = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
-            value={userInfo.phone}
+            value={state.phone}
             id="outlined-error-helper-text"
             label="شماره همراه"
             sx={{ width: "100%" }}
@@ -183,6 +169,12 @@ const UserAccount = () => {
           >
             <span>ثبت رمز جدید</span>
           </Button>
+          <Typography variant="p" component="p" sx={{ textAlign: "center", color: "red" }}>
+            {!!state.error && state.error}
+          </Typography>
+          <Typography variant="p" component="p" sx={{ textAlign: "center", color: "green" }}>
+            {!!state.success && state.success}
+          </Typography>
         </Grid>
       </Grid>
     </>
