@@ -27,7 +27,10 @@ const loginSuccess = (data , phone) => {
   return { type: "LOGIN_SUCCESS", payload: data , phone };
 };
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 72e111aaa9c793b68253e7ce5bc2559d2086264e
 export const registerUser = (user , phone) => {
   return (dispatch) => {
     dispatch(fetchRequest());
