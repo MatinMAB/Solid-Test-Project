@@ -78,7 +78,7 @@ const Register = () => {
   };
 
   const signUp = () => {
-    dispatch(registerUser(user));
+    dispatch(registerUser(user , user.phone));
   };
 
   return (

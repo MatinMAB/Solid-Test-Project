@@ -9,10 +9,11 @@ const fetchFailure = (error) => {
   return { type: "FETCH_FAILURE", payload: error };
 };
 
-const registerSuccess = (data) => {
+const registerSuccess = (data, phone) => {
   return {
     type: "REGISTER_SUCCESS",
     payload: data,
+    phone,
   };
 };
 
@@ -24,7 +25,7 @@ const loginSuccess = (data) => {
   return { type: "LOGIN_SUCCESS", payload: data };
 };
 
-export const registerUser = (user) => {
+export const registerUser = (user , phone) => {
   return (dispatch) => {
     dispatch(fetchRequest());
     axios
@@ -33,7 +34,7 @@ export const registerUser = (user) => {
       )
       .then((response) => {
         console.log(response.data);
-        dispatch(registerSuccess(response.data));
+        dispatch(registerSuccess(response.data , phone));
       })
       .catch((error) => {
         dispatch(fetchFailure(error.message));
