@@ -26,14 +26,13 @@ const ActivateForm = () => {
 
   //States
   const [confirmCode, setConfirmCode] = useState("");
-  const [codeError, setCodeError] = useState(false);
 
   //SideEffects
   useEffect(() => {
-    if (state.active) {
+    if (state.navigate === "/profile") {
       navigate("/profile");
     }
-  }, [state.active]);
+  }, [state.navigate]);
 
   //Functions
   const confirmCodeHandler = (event) => {
@@ -44,12 +43,6 @@ const ActivateForm = () => {
     dispatch(
       activateUser({ phone: state.phone, token: state.token, confirmCode })
     );
-
-    if (confirmCode != state.confirmCode) {
-      setCodeError(true);
-    } else {
-      setCodeError(false);
-    }
   };
 
   return (
@@ -95,11 +88,7 @@ const ActivateForm = () => {
             component="p"
             sx={{ margin: "10px 0 0", textAlign: "center", color: "red" }}
           >
-            {state.error || codeError ? (
-              <span>کد تاییدیه به درستی وارد نشده است یا توکن منقضی شده است.</span>
-            ) : (
-              <p></p>
-            )}
+            {!!state.error && state.error}
           </Typography>
         </Box>
       </div>
