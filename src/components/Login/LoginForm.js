@@ -23,6 +23,9 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
+//Import Validation Functions
+import validate from "../../helpers/validateLogin";
+
 //Login Functional Component
 const LoginForm = () => {
   //Router hook
@@ -39,28 +42,34 @@ const LoginForm = () => {
     phone: "",
     password: "",
   });
+  const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
 
   //SideEffects
   useEffect(() => {
+    setErrors(validate(user));
+    console.log(errors);
+  }, [user, touched]);
+  useEffect(() => {
     if (state.navigateLink === "/profile") {
       navigate("/profile");
-    }
-    else if(state.navigateLink === "/activate"){
+    } else if (state.navigateLink === "/activate") {
       navigate("/activate");
     }
   }, [state.navigateLink]);
 
   //Functions
-  const phoneHandler = (event) => {
+  const userHandler = (event) => {
     setUser((prevUser) => ({
       ...prevUser,
-      phone: event.target.value,
+      [event.target.name]: event.target.value,
     }));
   };
-  const passwordHandler = (event) => {
-    setUser((prevUser) => ({
-      ...prevUser,
-      password: event.target.value,
+
+  const focusHandler = (event) => {
+    setTouched((prevTouched) => ({
+      ...prevTouched,
+      [event.target.name]: true,
     }));
   };
 
@@ -69,7 +78,14 @@ const LoginForm = () => {
   };
 
   const login = () => {
-    dispatch(loginUser(user));
+    if (!Object.keys(errors).length) {
+      dispatch(loginUser(user));
+    } else {
+      setTouched({
+        phone: true,
+        password: true,
+      });
+    }
   };
   return (
     <>
@@ -90,21 +106,31 @@ const LoginForm = () => {
           <Grid container spacing={3}>
             <Grid item xs={12} sm={6}>
               <TextField
+                error={!!errors.phone && !!touched.phone}
+                name="phone"
                 id="outlined-error-helper-text"
                 label="شماره همراه *"
                 value={user.phone}
-                onChange={phoneHandler}
+                onChange={userHandler}
                 sx={{ width: "100%" }}
+                helperText={!!errors.phone && !!touched.phone && errors.phone}
+                onFocus={focusHandler}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                error={!!errors.password && !!touched.password}
+                name="password"
                 id="outlined-error-helper-text"
                 type={showPassword ? "text" : "password"}
                 label="رمز عبور *"
                 value={user.password}
-                onChange={passwordHandler}
+                onChange={userHandler}
                 sx={{ width: "100%" }}
+                helperText={
+                  !!errors.password && !!touched.password && errors.password
+                }
+                onFocus={focusHandler}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">

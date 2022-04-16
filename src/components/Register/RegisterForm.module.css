@@ -18,3 +18,8 @@
   color: #1976d2;
   text-decoration: none;
 }
+@media screen and (max-width:600px) {
+  .registerFormBox{
+    width : 350px;
+  }
+}

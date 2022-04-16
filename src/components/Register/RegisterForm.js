@@ -23,6 +23,9 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
+//Import Validation Functions
+import validate from "../../helpers/validateRegister";
+
 //Register Functional Component
 const Register = () => {
   //Router hook
@@ -40,8 +43,15 @@ const Register = () => {
     phone: "",
     password: "",
   });
+  const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
 
   //SideEffects
+  useEffect(() => {
+    setErrors(validate(user));
+    console.log(errors);
+  }, [user, touched]);
+
   useEffect(() => {
     if (state.navigateLink === "/activate") {
       navigate("/activate");
@@ -49,36 +59,35 @@ const Register = () => {
   }, [state.navigateLink]);
 
   //Functions
-  const firstnameHandler = (event) => {
+  const userHandler = (event) => {
     setUser((prevUser) => ({
       ...prevUser,
-      firstname: event.target.value,
+      [event.target.name]: event.target.value,
     }));
   };
-  const lastnameHandler = (event) => {
-    setUser((prevUser) => ({
-      ...prevUser,
-      lastname: event.target.value,
+
+  const focusHandler = (event) => {
+    setTouched((prevTouched) => ({
+      ...prevTouched,
+      [event.target.name]: true,
     }));
   };
-  const phoneHandler = (event) => {
-    setUser((prevUser) => ({
-      ...prevUser,
-      phone: event.target.value,
-    }));
-  };
-  const passwordHandler = (event) => {
-    setUser((prevUser) => ({
-      ...prevUser,
-      password: event.target.value,
-    }));
-  };
+
   const showPasswordHandler = () => {
     setShowPassword(!showPassword);
   };
 
   const signUp = () => {
-    dispatch(registerUser(user , user.phone));
+    if (!Object.keys(errors).length) {
+      dispatch(registerUser(user, user.phone));
+    } else {
+      setTouched({
+        firstname: true,
+        lastname: true,
+        phone: true,
+        password: true,
+      });
+    }
   };
 
   return (
@@ -97,42 +106,64 @@ const Register = () => {
           >
             فرم ثبت نام
           </Typography>
-          <Grid container spacing={3}>
+          <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
+                error={!!errors.firstname && !!touched.firstname}
+                name="firstname"
                 id="outlined-error-helper-text"
                 label="نام *"
                 value={user.firstname}
-                onChange={firstnameHandler}
+                onChange={userHandler}
                 sx={{ width: "100%" }}
+                helperText={
+                  !!errors.firstname && !!touched.firstname && errors.firstname
+                }
+                onFocus={focusHandler}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                error={!!errors.lastname && !!touched.lastname}
+                name="lastname"
                 id="outlined-error-helper-text"
                 label="نام خانوادگی *"
                 value={user.lastname}
-                onChange={lastnameHandler}
+                onChange={userHandler}
                 sx={{ width: "100%" }}
+                helperText={
+                  !!errors.lastname && !!touched.lastname && errors.lastname
+                }
+                onFocus={focusHandler}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                error={!!errors.phone && !!touched.phone}
+                name="phone"
                 id="outlined-error-helper-text"
                 label="شماره همراه *"
                 value={user.phone}
-                onChange={phoneHandler}
+                onChange={userHandler}
                 sx={{ width: "100%" }}
+                helperText={!!errors.phone && !!touched.phone && errors.phone}
+                onFocus={focusHandler}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
+                error={!!errors.password && !!touched.password}
+                name="password"
                 id="outlined-error-helper-text"
                 type={showPassword ? "text" : "password"}
                 label="رمز عبور *"
                 value={user.password}
-                onChange={passwordHandler}
+                onChange={userHandler}
                 sx={{ width: "100%" }}
+                helperText={
+                  !!errors.password && !!touched.password && errors.password
+                }
+                onFocus={focusHandler}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">

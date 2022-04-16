@@ -19,6 +19,9 @@ import {
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
+//Import Validation Functions
+import validate from "../../helpers/validateSetNewPassword";
+
 const UserAccount = () => {
   //Router hook
   const navigate = useNavigate();
@@ -34,6 +37,15 @@ const UserAccount = () => {
     current: "",
   });
 
+  const [errors, setErrors] = useState({});
+  const [touched, setTouched] = useState({});
+
+  //SideEffects
+  useEffect(() => {
+    setErrors(validate(password));
+    console.log(errors);
+  }, [password, touched]);
+
   useEffect(() => {
     dispatch(getUserInfo(state.token));
   }, []);
@@ -44,29 +56,38 @@ const UserAccount = () => {
     }
   }, [state.token]);
 
-  const currentPasswordHandler = (event) => {
+  //Functions
+  const passwordHandler = (event) => {
     setPassword((prevPassword) => ({
       ...prevPassword,
-      current: event.target.value,
+      [event.target.name]: event.target.value,
     }));
   };
-  const newPasswordHandler = (event) => {
-    setPassword((prevPassword) => ({
-      ...prevPassword,
-      new: event.target.value,
+
+  const focusHandler = (event) => {
+    setTouched((prevTouched) => ({
+      ...prevTouched,
+      [event.target.name]: true,
     }));
   };
+
   const showPasswordHandler = () => {
     setShowPassword(!showPassword);
   };
   const ConfirmNewPassword = () => {
-    dispatch(changePassword(password, state.token));
-    setPassword({
-      new: "",
-      current: "",
-    });
+    if (!Object.keys(errors).length) {
+      dispatch(changePassword(password, state.token));
+      setPassword({
+        new: "",
+        current: "",
+      });
+    } else {
+      setTouched({
+        new: true,
+        current: true,
+      });
+    }
   };
-
 
   return (
     <>
@@ -116,12 +137,16 @@ const UserAccount = () => {
       <Grid container spacing={3} sx={{ padding: "10px 50px" }}>
         <Grid item xs={12} sm={6}>
           <TextField
+            name="current"
+            error={!!errors.current && !!touched.current}
             id="outlined-error-helper-text"
             type={showPassword ? "text" : "password"}
             value={password.current}
             label="رمز عبور فعلی"
-            onChange={currentPasswordHandler}
+            onChange={passwordHandler}
             sx={{ width: "100%" }}
+            helperText={!!errors.current && !!touched.current && errors.current}
+            onFocus={focusHandler}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -139,12 +164,16 @@ const UserAccount = () => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+            name="new"
+            error={!!errors.new && !!touched.new}
             id="outlined-error-helper-text"
             type={showPassword ? "text" : "password"}
             label="رمز جدید"
             value={password.new}
-            onChange={newPasswordHandler}
+            onChange={passwordHandler}
             sx={{ width: "100%" }}
+            helperText={!!errors.new && !!touched.new && errors.new}
+            onFocus={focusHandler}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -169,10 +198,18 @@ const UserAccount = () => {
           >
             <span>ثبت رمز جدید</span>
           </Button>
-          <Typography variant="p" component="p" sx={{ textAlign: "center", color: "red" }}>
+          <Typography
+            variant="p"
+            component="p"
+            sx={{ textAlign: "center", color: "red" }}
+          >
             {!!state.error && state.error}
           </Typography>
-          <Typography variant="p" component="p" sx={{ textAlign: "center", color: "green" }}>
+          <Typography
+            variant="p"
+            component="p"
+            sx={{ textAlign: "center", color: "green" }}
+          >
             {!!state.success && state.success}
           </Typography>
         </Grid>
