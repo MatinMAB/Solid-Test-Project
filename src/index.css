@@ -5,6 +5,8 @@
 }
 
 body {
+  height: 100vh;
+  overflow-x: hidden;
   direction: rtl;
   margin: 0;
   padding: 0;

@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/static/css/main.552d4644.css",
+    "main.css": "/static/css/main.eae9c86b.css",
     "main.js": "/static/js/main.37668863.js",
     "static/media/Sahel-Bold.eot": "/static/media/Sahel-Bold.ea8a47158ab98ee1a167.eot",
     "static/media/Sahel-Bold.ttf": "/static/media/Sahel-Bold.bde05dac70745ff01f0a.ttf",
@@ -9,11 +9,11 @@
     "static/media/Sahel-Bold.woff": "/static/media/Sahel-Bold.e563d4be3c88b51da579.woff",
     "static/media/Sahel.woff": "/static/media/Sahel.ec0cfe5845afc51e2745.woff",
     "index.html": "/index.html",
-    "main.552d4644.css.map": "/static/css/main.552d4644.css.map",
+    "main.eae9c86b.css.map": "/static/css/main.eae9c86b.css.map",
     "main.37668863.js.map": "/static/js/main.37668863.js.map"
   },
   "entrypoints": [
-    "static/css/main.552d4644.css",
+    "static/css/main.eae9c86b.css",
     "static/js/main.37668863.js"
   ]
 }
