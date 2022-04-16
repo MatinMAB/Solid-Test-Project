@@ -1,8 +1,6 @@
 //Import Axios
 import axios from "axios";
 
-import { useNavigate } from "react-router-dom";
-
 const fetchRequest = () => {
   return { type: "FETCH_REQUEST" };
 };
@@ -11,14 +9,10 @@ const fetchFailure = (error) => {
   return { type: "FETCH_FAILURE", payload: error };
 };
 
-const registerSuccess = (data, firstname, lastname, password, phone) => {
+const registerSuccess = (data) => {
   return {
     type: "REGISTER_SUCCESS",
     payload: data,
-    firstname,
-    lastname,
-    password,
-    phone,
   };
 };
 
@@ -39,15 +33,7 @@ export const registerUser = (user) => {
       )
       .then((response) => {
         console.log(response.data);
-        dispatch(
-          registerSuccess(
-            response.data,
-            user.firstname,
-            user.lastname,
-            user.password,
-            user.phone
-          )
-        );
+        dispatch(registerSuccess(response.data));
       })
       .catch((error) => {
         dispatch(fetchFailure(error.message));

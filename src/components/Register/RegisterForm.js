@@ -43,10 +43,10 @@ const Register = () => {
 
   //SideEffects
   useEffect(() => {
-    if (!!state.token) {
+    if (state.navigateLink === "/activate") {
       navigate("/activate");
     }
-  }, [state.token]);
+  }, [state.navigateLink]);
 
   //Functions
   const firstnameHandler = (event) => {
@@ -156,17 +156,20 @@ const Register = () => {
                 color="primary"
                 sx={{ width: "100%" }}
               >
-                {state.loading ? <span>صبر کنید ...</span> : <span>ثبت نام</span>}
+                {state.loading ? (
+                  <span>صبر کنید ...</span>
+                ) : (
+                  <span>ثبت نام</span>
+                )}
               </Button>
             </Grid>
           </Grid>
           <Typography
             variant="subtitle2"
             component="p"
-            sx={{ margin: "10px 0 0", textAlign: "center" ,color : 'red' }}
+            sx={{ margin: "10px 0 0", textAlign: "center", color: "red" }}
           >
-            {state.error ? <span>ارتباط دچار مشکل است! لطفا مجدد امتحان کنید</span> : <p></p>}
-            {state.alreadyExist ? <span>شما از قبل حساب کاربری داشته اید! لطفا ورود کنید</span> : <p></p>}
+            {!!state.error && state.error}
           </Typography>
           <Typography
             variant="p"

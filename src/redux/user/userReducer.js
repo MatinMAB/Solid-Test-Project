@@ -1,15 +1,10 @@
 const initialState = {
-  ok: false,
   active: false,
   token: "",
-  phone: "",
-  password: "",
-  firstname: "",
-  lastname: "",
   confirmCode: "123456",
   loading: false,
   error: "",
-  alreadyExist: false,
+  navigateLink: "",
 };
 
 const userReducer = (state = initialState, action) => {
@@ -19,23 +14,33 @@ const userReducer = (state = initialState, action) => {
     case "FETCH_FAILURE":
       return {
         ...state,
-        ok: false,
         loading: false,
-        error: action.payload,
+        error: "در ارتباط با سرور مشکلی رخ داده است.",
       };
     case "REGISTER_SUCCESS":
-      return {
-        ...state,
-        loading: false,
-        error: "",
-        phone: action.phone,
-        password: action.password,
-        firstname: action.firstname,
-        lastname: action.lastname,
-        active: action.payload.active,
-        token: action.payload.token,
-        alreadyExist: action.payload.alreadyExist,
-      };
+      if (action.payload.ok) {
+        return {
+          ...state,
+          loading: false,
+          error: "",
+          active: action.payload.active,
+          token: action.payload.token,
+          navigateLink: "/activate",
+        };
+      } else if (!action.payload.ok && action.payload.alreadyExist) {
+        return {
+          ...state,
+          loading: false,
+          error: "شما از قبل حساب کاربری داشته‌اید. لطفا وارد شوید",
+        };
+      } else {
+        return {
+          ...state,
+          loading: false,
+          error: "اطلاعات وارد شده صحیح نمی‌باشند",
+        };
+      }
+
     case "ACTIVATE_SUCCESS":
       if (action.payload.ok) {
         return {
@@ -57,14 +62,14 @@ const userReducer = (state = initialState, action) => {
           ...state,
           active: action.payload.active,
           token: action.payload.token,
-          loading : false,
-          error:""
+          loading: false,
+          error: "",
         };
       } else {
         return {
           ...state,
-          loading : false,
-          error : "error Expected"
+          loading: false,
+          error: "error Expected",
         };
       }
 
