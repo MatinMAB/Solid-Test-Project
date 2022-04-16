@@ -35,7 +35,7 @@
   background-color: #fff;
   border-radius: 20px;
 }
-.menuIcon{
+.menuIcon {
   display: none;
 }
 
@@ -43,7 +43,7 @@
   .lists {
     display: none;
   }
-  .menuIcon{
+  .menuIcon {
     display: block;
   }
 }

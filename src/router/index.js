@@ -1,6 +1,6 @@
 import React from "react";
 
-//Import Routes
+//Import Router
 import { Routes, Route, Navigate } from "react-router-dom";
 
 //Import Components

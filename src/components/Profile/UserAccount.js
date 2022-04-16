@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserInfo, changePassword } from "../../redux/user/userActions";
 
-//Import Link Router
+//Import Router
 import { useNavigate } from "react-router-dom";
 
 //Material UI
@@ -30,13 +30,12 @@ const UserAccount = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
 
+  //States
   const [showPassword, setShowPassword] = useState(false);
-
   const [password, setPassword] = useState({
     new: "",
     current: "",
   });
-
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
 
@@ -74,6 +73,7 @@ const UserAccount = () => {
   const showPasswordHandler = () => {
     setShowPassword(!showPassword);
   };
+
   const ConfirmNewPassword = () => {
     if (!Object.keys(errors).length) {
       dispatch(changePassword(password, state.token));
@@ -89,6 +89,7 @@ const UserAccount = () => {
     }
   };
 
+  //V-DOM
   return (
     <>
       <Typography

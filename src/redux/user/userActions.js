@@ -1,6 +1,7 @@
 //Import Axios
 import axios from "axios";
 
+//Actions
 const fetchRequest = () => {
   return { type: "FETCH_REQUEST" };
 };
@@ -9,6 +10,7 @@ const fetchFailure = (error) => {
   return { type: "FETCH_FAILURE", payload: error };
 };
 
+//Action for Register
 const registerSuccess = (data, phone) => {
   return {
     type: "REGISTER_SUCCESS",
@@ -17,35 +19,33 @@ const registerSuccess = (data, phone) => {
   };
 };
 
+//Action for Activate
 const activateSuccess = (data) => {
   return { type: "ACTIVATE_SUCCESS", payload: data };
 };
 
-
-const loginSuccess = (data , phone) => {
-  return { type: "LOGIN_SUCCESS", payload: data , phone };
+//Action for Login
+const loginSuccess = (data, phone) => {
+  return { type: "LOGIN_SUCCESS", payload: data, phone };
 };
 
-
+//Action for Getting User Info
 const getUserInfoSuccess = (data) => {
   return { type: "GET_USER_INFO_SUCCESS", payload: data };
 };
 
+//Action for Change and Set New Password
 const changePasswordSuccess = (data) => {
   return { type: "CHANGE_PASSSWORD_SUCCESS", payload: data };
 };
 
+//Action for Exit from Dashboard
 export const exit = () => {
   return { type: "EXIT" };
 };
 
-
-
-
-
-
-
-export const registerUser = (user , phone) => {
+//Async Action for Register
+export const registerUser = (user, phone) => {
   return (dispatch) => {
     dispatch(fetchRequest());
     axios
@@ -54,7 +54,7 @@ export const registerUser = (user , phone) => {
       )
       .then((response) => {
         console.log(response.data);
-        dispatch(registerSuccess(response.data , phone));
+        dispatch(registerSuccess(response.data, phone));
       })
       .catch((error) => {
         dispatch(fetchFailure(error.message));
@@ -62,6 +62,7 @@ export const registerUser = (user , phone) => {
   };
 };
 
+//Async Action for Activate
 export const activateUser = (user) => {
   return (dispatch) => {
     dispatch(fetchRequest());
@@ -79,6 +80,7 @@ export const activateUser = (user) => {
   };
 };
 
+//Async Action for Login
 export const loginUser = (user) => {
   return (dispatch) => {
     dispatch(fetchRequest());
@@ -88,7 +90,7 @@ export const loginUser = (user) => {
       )
       .then((response) => {
         console.log(response.data);
-        dispatch(loginSuccess(response.data , user.phone));
+        dispatch(loginSuccess(response.data, user.phone));
       })
       .catch((error) => {
         dispatch(fetchFailure(error.message));
@@ -96,7 +98,7 @@ export const loginUser = (user) => {
   };
 };
 
-
+//Async Action for Getting User Info
 export const getUserInfo = (token) => {
   return (dispatch) => {
     dispatch(fetchRequest());
@@ -114,7 +116,8 @@ export const getUserInfo = (token) => {
   };
 };
 
-export const changePassword = (password , token) => {
+//Action for Change and Set New Password
+export const changePassword = (password, token) => {
   return (dispatch) => {
     dispatch(fetchRequest());
     axios

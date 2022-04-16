@@ -1,12 +1,17 @@
-import React , {useState} from "react";
+import React, { useState } from "react";
 
 //Import React-Redux
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { exit } from "../../redux/user/userActions";
 
-
-//Import Link Router
-import { Routes, Route, Link, useLocation , useNavigate } from "react-router-dom";
+//Import Router
+import {
+  Routes,
+  Route,
+  Link,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 
 //Import Styles
 import styles from "./MyProfile.module.css";
@@ -16,38 +21,39 @@ import { Grid } from "@mui/material";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import ListIcon from '@mui/icons-material/List';
+import ListIcon from "@mui/icons-material/List";
 
 //Components
 import Dashboard from "./Dashboard";
 import UserAccount from "./UserAccount";
 
-//Profile Functional Component
 const Profile = () => {
+  //Router hook
   const location = useLocation();
   const navigate = useNavigate();
 
+  //redux hooks
+  const dispatch = useDispatch();
 
-//redux hooks
-const state = useSelector((state) => state);
-const dispatch = useDispatch();
-  
+  //States (for menu in small-responsive)
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
+  //Functions
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
+
   const handleClose = () => {
     setAnchorEl(null);
   };
 
   const exitDashboard = () => {
-    navigate('/login');
-    dispatch(exit())
+    navigate("/login");
+    dispatch(exit());
+  };
 
-  }
-
-
+  //V-DOM
   return (
     <>
       <Grid container spacing={2} sx={{ height: "100vh" }}>
@@ -74,7 +80,7 @@ const dispatch = useDispatch();
                 aria-expanded={open ? "true" : undefined}
                 onClick={handleClick}
               >
-                <ListIcon fontSize="large" color="action"/>
+                <ListIcon fontSize="large" color="action" />
               </Button>
               <Menu
                 id="demo-positioned-menu"
@@ -91,8 +97,12 @@ const dispatch = useDispatch();
                   horizontal: "left",
                 }}
               >
-                <MenuItem onClick={() => navigate('/profile')}>داشبورد</MenuItem>
-                <MenuItem onClick={() => navigate('/profile/my-account')}>حساب کاربری</MenuItem>
+                <MenuItem onClick={() => navigate("/profile")}>
+                  داشبورد
+                </MenuItem>
+                <MenuItem onClick={() => navigate("/profile/my-account")}>
+                  حساب کاربری
+                </MenuItem>
                 <MenuItem onClick={exitDashboard}>خروج</MenuItem>
               </Menu>
             </div>

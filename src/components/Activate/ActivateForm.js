@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { activateUser } from "../../redux/user/userActions";
 
-//Import Link Router
+//Import Router
 import { useNavigate } from "react-router-dom";
 
 //Import Styles
@@ -15,7 +15,6 @@ import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { Typography, Grid, Button } from "@mui/material";
 
-//Activate Functional Component
 const ActivateForm = () => {
   //Router hook
   const navigate = useNavigate();
@@ -51,6 +50,7 @@ const ActivateForm = () => {
     );
   };
 
+  //V-DOM
   return (
     <>
       <div className={styles.activatePage}>

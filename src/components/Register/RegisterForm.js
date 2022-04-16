@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { registerUser } from "../../redux/user/userActions";
 
-//Import Link Router
+//Import Router
 import { Link, useNavigate } from "react-router-dom";
 
 //Import Styles
@@ -26,7 +26,6 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 //Import Validation Functions
 import validate from "../../helpers/validateRegister";
 
-//Register Functional Component
 const Register = () => {
   //Router hook
   const navigate = useNavigate();
@@ -90,6 +89,7 @@ const Register = () => {
     }
   };
 
+  //V-DOM
   return (
     <>
       <div className={styles.registerPage}>

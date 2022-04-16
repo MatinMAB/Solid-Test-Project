@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { loginUser } from "../../redux/user/userActions";
 
-//Import Link Router
+//Import Router
 import { useNavigate, Link } from "react-router-dom";
 
 //Import Styles
@@ -26,7 +26,6 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 //Import Validation Functions
 import validate from "../../helpers/validateLogin";
 
-//Login Functional Component
 const LoginForm = () => {
   //Router hook
   const navigate = useNavigate();
@@ -87,6 +86,8 @@ const LoginForm = () => {
       });
     }
   };
+
+  //V-DOM
   return (
     <>
       <div className={styles.loginPage}>

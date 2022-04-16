@@ -1,10 +1,9 @@
-import React , {useEffect} from "react";
-
+import React, { useEffect } from "react";
 
 //Import React-Redux
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
-//Import Link Router
+//Import Router
 import { useNavigate } from "react-router-dom";
 
 //Import Styles
@@ -24,17 +23,18 @@ import MailIcon from "@mui/icons-material/Mail";
 import ArrowCircleLeftSharpIcon from "@mui/icons-material/ArrowCircleLeftSharp";
 
 const Dashboard = () => {
-
+  //redux hooks
   const state = useSelector((state) => state);
-  
   const navigate = useNavigate();
 
+  //SideEffects
   useEffect(() => {
-    if(!!state.token === false){
-      navigate('/login')
+    if (!!state.token === false) {
+      navigate("/login");
     }
-  },[state.token])
+  }, [state.token]);
 
+  //V-DOM
   return (
     <>
       <Grid container spacing={3} sx={{ padding: "30px 20px" }}>
