@@ -45,16 +45,13 @@ const LoginForm = () => {
 
   //SideEffects
   useEffect(() => {
-    if (!state.active && !!state.token) {
-      navigate("/activate");
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!!state.token) {
+    if (state.navigateLink === "/profile") {
       navigate("/profile");
     }
-  }, [state.token]);
+    else if(state.navigateLink === "/activate"){
+      navigate("/activate");
+    }
+  }, [state.navigateLink]);
 
   //Functions
   const phoneHandler = (event) => {

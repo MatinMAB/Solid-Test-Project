@@ -17,13 +17,16 @@ const registerSuccess = (data, phone) => {
   };
 };
 
+
 const activateSuccess = (data) => {
   return { type: "ACTIVATE_SUCCESS", payload: data };
 };
 
-const loginSuccess = (data) => {
-  return { type: "LOGIN_SUCCESS", payload: data };
+
+const loginSuccess = (data , phone) => {
+  return { type: "LOGIN_SUCCESS", payload: data , phone };
 };
+
 
 export const registerUser = (user , phone) => {
   return (dispatch) => {
@@ -68,7 +71,7 @@ export const loginUser = (user) => {
       )
       .then((response) => {
         console.log(response.data);
-        dispatch(loginSuccess(response.data));
+        dispatch(loginSuccess(response.data , user.phone));
       })
       .catch((error) => {
         dispatch(fetchFailure(error.message));

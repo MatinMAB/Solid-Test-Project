@@ -29,10 +29,10 @@ const ActivateForm = () => {
 
   //SideEffects
   useEffect(() => {
-    if (state.navigate === "/profile") {
+    if (state.navigateLink === "/profile") {
       navigate("/profile");
     }
-  }, [state.navigate]);
+  }, [state.navigateLink]);
 
   //Functions
   const confirmCodeHandler = (event) => {

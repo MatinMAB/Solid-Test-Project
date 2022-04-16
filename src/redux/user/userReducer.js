@@ -39,12 +39,9 @@ const userReducer = (state = initialState, action) => {
         return {
           ...state,
           loading: false,
-          error: "در ارتباط با سرور مشکلی رخ داده است.",
+          error: "اطلاعات وارد شده صحیح نمی‌باشد.",
         };
       }
-
-
-
 
     case "ACTIVATE_SUCCESS":
       if (action.payload.ok) {
@@ -55,37 +52,40 @@ const userReducer = (state = initialState, action) => {
           error: "",
           navigateLink: "/profile",
         };
-      } else if (!action.payload.ok) {
+      } else {
         return {
           ...state,
           loading: false,
           error: "کد تاییدیه به درستی وارد نشده است یا توکن منقضی شده است.",
         };
-      } else {
-        return {
-          ...state,
-          loading: false,
-          error: "در ارتباط با سرور مشکلی رخ داده است.",
-        };
       }
 
-
-
-
     case "LOGIN_SUCCESS":
-      if (action.payload.ok) {
+      if (action.payload.ok && action.payload.active) {
         return {
           ...state,
           active: action.payload.active,
           token: action.payload.token,
+          phone: action.phone,
           loading: false,
           error: "",
+          navigateLink: "/profile",
+        };
+      } else if (action.payload.ok && !action.payload.active) {
+        return {
+          ...state,
+          active: action.payload.active,
+          phone: action.phone,
+          token: action.payload.token,
+          loading: false,
+          error: "",
+          navigateLink: "/activate",
         };
       } else {
         return {
           ...state,
           loading: false,
-          error: "error Expected",
+          error: "اطلاعات وارد شده صحیح نمی‌باشد.",
         };
       }
 
